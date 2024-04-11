@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_pref_reg_example/view/Forgot_page/forgot.dart';
 import 'package:shared_pref_reg_example/view/Home_page/homepage.dart';
 import 'package:shared_pref_reg_example/view/Registeration_page/registeration.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -73,10 +74,19 @@ class _LoginpageState extends State<Loginpage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  "forgot password",
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
-                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Forgot(),
+                        ));
+                  },
+                  child: Text(
+                    "forgot password",
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                  ),
+                )
               ],
             ),
             SizedBox(
