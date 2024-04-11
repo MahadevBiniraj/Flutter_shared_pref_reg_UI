@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:shared_pref_reg_example/view/Registeration_page/registeration.dart';
+import 'package:shared_pref_reg_example/view/Login_page/loginpage.dart';
 
-class Loginpage extends StatefulWidget {
-  const Loginpage({super.key});
+class registeration extends StatefulWidget {
+  const registeration({super.key});
 
   @override
-  State<Loginpage> createState() => _LoginpageState();
+  State<registeration> createState() => _registerationState();
 }
 
-class _LoginpageState extends State<Loginpage> {
+class _registerationState extends State<registeration> {
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
+  TextEditingController confirmpasscontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,12 +25,9 @@ class _LoginpageState extends State<Loginpage> {
           children: [
             Center(
               child: Text(
-                "Login",
+                "Register",
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700),
               ),
-            ),
-            SizedBox(
-              height: 50,
             ),
             Text(
               "Enter your email address",
@@ -65,20 +63,24 @@ class _LoginpageState extends State<Loginpage> {
                       borderRadius: BorderRadius.circular(20),
                       borderSide: BorderSide(width: 20))),
             ),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  "forgot password",
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
-                ),
-              ],
+            Text(
+              "Re-Enter your password",
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
             ),
             SizedBox(
-              height: 5,
+              height: 10,
+            ),
+            TextFormField(
+              controller: confirmpasscontroller,
+              decoration: InputDecoration(
+                  hintText: "Confirm Password",
+                  suffixIcon: Icon(Icons.visibility),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(width: 20))),
+            ),
+            SizedBox(
+              height: 20,
             ),
             Container(
               height: 57,
@@ -89,7 +91,7 @@ class _LoginpageState extends State<Loginpage> {
               ),
               child: Center(
                   child: Text(
-                "Login",
+                "Sign Up",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
@@ -107,14 +109,14 @@ class _LoginpageState extends State<Loginpage> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => registeration(),
+                            builder: (context) => Loginpage(),
                           ));
                     },
                     child: Row(
                       children: [
-                        Text("Don't have an account ?"),
+                        Text("Already have an account ?"),
                         Text(
-                          "Sign Up",
+                          "Sign In",
                           style: TextStyle(
                               fontSize: 17, fontWeight: FontWeight.w600),
                         ),
