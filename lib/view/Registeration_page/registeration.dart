@@ -94,7 +94,7 @@ class _registerationState extends State<registeration> {
                   await prefs.setString("pass", passwordcontroller.text);
                   await prefs.setString(
                       "confirmpass", confirmpasscontroller.text);
-                  if (passwordcontroller.text == confirmpasscontroller) {
+                  if (passwordcontroller.text == confirmpasscontroller.text) {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

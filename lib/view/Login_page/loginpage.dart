@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_pref_reg_example/view/Home_page/homepage.dart';
 import 'package:shared_pref_reg_example/view/Registeration_page/registeration.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Loginpage extends StatefulWidget {
   const Loginpage({super.key});
@@ -80,21 +82,83 @@ class _LoginpageState extends State<Loginpage> {
             SizedBox(
               height: 5,
             ),
-            Container(
-              height: 57,
-              width: 400,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.black,
+            InkWell(
+              onTap: () async {
+                final SharedPreferences prefs =
+                    await SharedPreferences.getInstance();
+                if (emailcontroller.text.isNotEmpty &&
+                    passwordcontroller.text.isNotEmpty) {
+                  final savedemail = await prefs.getString("email");
+                  final savedpass = prefs.getString("pass");
+                  if (savedemail == emailcontroller.text &&
+                      savedpass == passwordcontroller.text) {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Homescreen(),
+                        ));
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Column(
+                            children: [
+                              Text(
+                                "Incorrect password",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w800),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "The password you entered is incorrect.",
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              Text(
+                                "please try again",
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    "OK",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.blue),
+                                  ))
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  }
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text("Enter the values")));
+                }
+              },
+              child: Container(
+                height: 57,
+                width: 400,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.black,
+                ),
+                child: Center(
+                    child: Text(
+                  "Login",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white),
+                )),
               ),
-              child: Center(
-                  child: Text(
-                "Login",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white),
-              )),
             ),
             SizedBox(
               height: 10,
