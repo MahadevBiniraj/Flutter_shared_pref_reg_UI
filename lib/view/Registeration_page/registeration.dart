@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_pref_reg_example/view/Login_page/loginpage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class registeration extends StatefulWidget {
   const registeration({super.key});
@@ -82,21 +83,85 @@ class _registerationState extends State<registeration> {
             SizedBox(
               height: 20,
             ),
-            Container(
-              height: 57,
-              width: 400,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.black,
+            InkWell(
+              onTap: () async {
+                final SharedPreferences prefs =
+                    await SharedPreferences.getInstance();
+                if (emailcontroller.text.isNotEmpty &&
+                    passwordcontroller.text.isNotEmpty &&
+                    confirmpasscontroller.text.isNotEmpty) {
+                  await prefs.setString("email", emailcontroller.text);
+                  await prefs.setString("pass", passwordcontroller.text);
+                  await prefs.setString(
+                      "confirmpass", confirmpasscontroller.text);
+                  if (passwordcontroller.text == confirmpasscontroller) {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Loginpage(),
+                        ));
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Column(
+                            children: [
+                              Text(
+                                "Incorrect password",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w800),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "The password you entered is incorrect.",
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              Text(
+                                "please try again",
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    "OK",
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.blue),
+                                  ))
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  }
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text("Enter the values")));
+                }
+              },
+              child: Container(
+                height: 57,
+                width: 400,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.black,
+                ),
+                child: Center(
+                    child: Text(
+                  "Sign Up",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white),
+                )),
               ),
-              child: Center(
-                  child: Text(
-                "Sign Up",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white),
-              )),
             ),
             SizedBox(
               height: 10,
